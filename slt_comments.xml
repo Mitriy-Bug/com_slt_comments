@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="5.0" method="upgrade">
+    <name>COM_SLT_COMMENTS</name>
+    <creationDate>12.01.2026</creationDate>
+    <copyright>2026 Mitriy_Bug</copyright>
+    <license>GNU General Public License версии 2 или более поздней; Смотрите LICENSE.txt</license>
+    <author>Mitriy_Bug</author>
+    <authorEmail>info@codersite.ru</authorEmail>
+    <authorUrl>https://www.codersite.ru</authorUrl>
+    <version>1.0.0</version>
+    <description>COM_SLT_COMMENTS_XML_DESCRIPTION</description>
+    <namespace path="src">Slt\Component\Slt_comments</namespace>
+    <scriptfile>script.php</scriptfile>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <files folder="site">
+        <folder>src</folder>
+        <folder>forms</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <media destination="com_slt_comments" folder="media">
+        <folder>js</folder>
+        <folder>css</folder>
+        <filename>joomla.asset.json</filename>
+    </media>
+
+    <languages folder="site/languages">
+			<language tag="en-GB">en-GB/com_slt_comments.ini</language>
+			<language tag="ru-RU">ru-RU/com_slt_comments.ini</language>
+    </languages>
+    <administration>
+        <menu>COM_SLT_COMMENTS</menu>
+        <submenu>
+			<menu link="option=com_slt_comments&amp;view=comments" view="comments" alt="Slt_comments/Comments">COM_SLT_COMMENTS_TITLE_COMMENTS</menu>
+        </submenu>
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>forms</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+        </files>
+        <languages folder="administrator/languages">
+			<language tag="en-GB">en-GB/com_slt_comments.ini</language>
+			<language tag="en-GB">en-GB/com_slt_comments.sys.ini</language>
+			<language tag="ru-RU">ru-RU/com_slt_comments.ini</language>
+			<language tag="ru-RU">ru-RU/com_slt_comments.sys.ini</language>
+        </languages>
+    </administration>
+    <layouts destination="components/slt_comments" folder="layouts">
+        <folder>comments</folder>
+    </layouts>
+    <config>
+        <fields name="params">
+            <fieldset name="component">
+                <field name="save_history" default="0" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

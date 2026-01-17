@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_slt_comments",
+  "version": "CVS: 1.0.0",
+  "license": "GNU General Public License версии 2 или более поздней; Смотрите LICENSE.txt",
+  "assets": [
+    {
+      "name": "com_slt_comments.admin",
+      "type": "style",
+      "uri": "com_slt_comments/admin.css"
+    },
+    {
+      "name": "com_slt_comments.admin",
+      "type": "script",
+      "uri": "com_slt_comments/admin.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+        "name": "com_slt_comments.list",
+        "type": "style",
+        "uri": "com_slt_comments/list.css"
+    }
+  ]
+}

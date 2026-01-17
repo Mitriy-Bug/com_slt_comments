@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Slt\Component\Slt_comments\Administrator\Field">
+  <fieldset>
+    <field name="id" type="text" readonly="true" class="readonly" default="0" description="JGLOBAL_FIELD_ID_DESC"/>
+    <field name="state" default="1" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="inputbox" size="1">
+      <option value="1">JPUBLISHED</option>
+      <option value="0">JUNPUBLISHED</option>
+      <option value="2">JARCHIVED</option>
+      <option value="-2">JTRASHED</option>
+    </field>
+    <field name="ordering"/>
+    <field name="created_by" type="createdby" default="0" label="JGLOBAL_FIELD_CREATED_BY_LABEL" description="JGLOBAL_FIELD_CREATED_BY_DESC" hint="COM_SLT_COMMENTS_FORM_LBL_COMMENT_CREATED_BY"/>
+    <field name="modified_by" type="modifiedby" default="0" label="JGLOBAL_FIELD_MODIFIED_BY_LABEL" description="JGLOBAL_FIELD_MODIFIED_BY_DESC" hint="COM_SLT_COMMENTS_FORM_LBL_COMMENT_MODIFIED_BY"/>
+    <field name="date_creation" type="calendar" class="inputbox" format="%Y-%m-%d %H:%M:%S" showtime="true" translateformat="true" required="true" message="Заполните дату создания" label="COM_SLT_COMMENTS_FORM_LBL_COMMENT_DATE_CREATION" description="" hint="COM_SLT_COMMENTS_FORM_LBL_COMMENT_DATE_CREATION"/>
+    <field name="name_author" required="true" message="Укажите имя автора" label="COM_SLT_COMMENTS_FORM_LBL_COMMENT_NAME_AUTHOR" description="" hint="COM_SLT_COMMENTS_FORM_LBL_COMMENT_NAME_AUTHOR"/>
+    <field name="comment" type="editor" buttons="true" class="inputbox" filter="safehtml" label="COM_SLT_COMMENTS_FORM_LBL_COMMENT_COMMENT" hint="COM_SLT_COMMENTS_FORM_LBL_COMMENT_COMMENT"/>
+
+    <field
+            type="ModalSelect"
+            name="id_content"
+            label="COM_SLT_COMMENTS_ID_CONTENT"
+            select="true"
+            iconSelect="fa fa-bomb"
+            titleSelect="Selecting the Article"
+            urlSelect="index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component"
+            clear="true"
+            sql_title_table="#__content"
+            sql_title_column="title"
+            sql_title_key="id"
+    />
+    <field name="id_parent"
+           default="0"
+           type="text"
+           label="COM_SLT_COMMENTS_FORM_LBL_COMMENT_ID_PARENT"
+           hint="COM_SLT_COMMENTS_FORM_LBL_COMMENT_ID_PARENT"
+           readonly="true"
+    />
+    <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
+  </fieldset>
+</form>
