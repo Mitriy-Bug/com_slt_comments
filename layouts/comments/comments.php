@@ -30,22 +30,22 @@ $cookie = $app->input->cookie;
 $uid = $cookie->getString('SLT_COOKIE_UID');
 $isModerate = false;
 
-$countComments = $displayData['countActiveComments'] ?? '';
+$countComments = $displayData['countActiveComments'] ?? '0';
 $formData = $displayData['formData'] ?? [];
 ?>
-<?php if (!empty($resultArrayComments) && !empty($resultArrayComments[0])) : ?>
 <div class="slt-comments-list">
     <h3><?php echo Text::_('PLG_CONTENT_SLT_COMMENTS_TITLE'); ?><?php echo !empty($countComments) ? ' <span>('.$countComments.')</span>' : ''; ?></h3>
     <div class="slt-comments-form-outer mt-4">
         <?php echo LayoutHelper::render('components.slt_comments.comments.commentFormFalse', $formData); ?>
     </div>
+    <?php if (!empty($resultArrayComments) && !empty($resultArrayComments[0])) : ?>
     <div class="slt-comments-list-inner">
         <div class="slt-comments-tree">
             <?php displayCommentsRecursive($resultArrayComments,$uid); ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>
-<?php endif; ?>
 <?php
 function displayCommentsRecursive($commentsArray,$uid = null, $parentId = 0, $level = 0): void
 {

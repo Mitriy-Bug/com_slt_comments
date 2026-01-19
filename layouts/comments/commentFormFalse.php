@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $app = Factory::getApplication();
@@ -22,10 +21,7 @@ $articleId = $displayData['articleID'] ?? 0;
 $parentId = $displayData['parentId'] ?? 0;
 $limitComment = $displayData['limitComment'] ?? 1000;
 $uid = $displayData['uid'] ?? '';
-// Добавляем опцию в скрипты
-//Factory::getApplication()->getDocument()->addScriptOptions('com_slt_comments', [
-//	'itemId' => (int) $articleId
-//]);
+$showPolicy = $displayData['textPolicy'] ?? 0;
 ?>
 		<form name="commentForm" class="form-validate">
 			<div class="slt-comments-form-message alert p-0" role="alert"></div>
@@ -64,7 +60,7 @@ $uid = $displayData['uid'] ?? '';
                 <input type="hidden" name="content_item_id" value="<?php echo (int) $articleId; ?>" />
                 <input type="hidden" name="parent_id" value="<?php echo (int) $parentId; ?>" />
                 <input type="hidden" name="uid" value="<?php echo $uid; ?>" />
-
+                <input type="hidden" name="show_policy" value="<?php echo $showPolicy; ?>" />
 				<div class="d-grid gap-2">
 					<button type="button" class="btn btn-primary btn-lg">
 						<?php echo Text::_('COM_SLT_COMMENTS_SUBMIT_BUTTON'); ?>

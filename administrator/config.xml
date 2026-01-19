@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset label="COM_SLT_COMMENTS" name="slt_comments">
+        <field name="catidvisible"
+               type="category"
+               required="true"
+               multiple="true"
+               default=""
+               extension="com_content"
+               label="COM_SLT_COMMENTS_VISIBLE_CATEGORY"
+        />
         <field name="sort" type="list" default="DESC" label="COM_SLT_COMMENTS_SORT">
             <option value="ASC">COM_SLT_COMMENTS_SORT_DATE_ASC</option>
             <option value="DESC">COM_SLT_COMMENTS_SORT_DATE_DESC</option>
@@ -23,6 +31,38 @@
                 filter="integer"
                 default="1000"
                 label="COM_SLT_COMMENTS_LIMIT_COMMENT"
+        />
+        <field
+                name="show_policy"
+                type="radio"
+                default="0"
+                class="btn-group btn-group-yesno"
+                label="COM_SLT_COMMENTS_SHOW_POLICY"
+        >
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <field
+                name="policy"
+                type="text"
+                default="/agreement"
+                label="COM_SLT_COMMENTS_POLICY"
+        />
+        <field
+                name="agreement"
+                type="text"
+                default="/agreement"
+                label="COM_SLT_COMMENTS_AGREEMENT"
+        />
+        <field
+                name="template_text_policy"
+                type="textarea"
+                default="ознакомлен с политикой по обработке персональных данных, даю &lt;a href='{{comment_policy}}'&gt;согласие на публикацию моего комментария&lt;/a&gt; на seolt.ru и на &lt;a href='{{comment_agreement}}'&gt;обработку персональных данных&lt;/a&gt;"
+                label="COM_SLT_COMMENTS_TEXT_POLICY"
+                description="{{comment_policy}} - ссылка на Политику, {{comment_agreement}} - ссылка на Согласие"
+                rows="10"
+                cols="5"
+                filter="raw"
         />
     </fieldset>
 

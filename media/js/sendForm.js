@@ -6,8 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
         makeFormAddComment(formAddCommentOuter);
     }
     let formAddComment = document.querySelectorAll('form[name="sltCommentForm"]');
+
     const commentsContainer = document.querySelector('.slt-comments-list-inner'); // контейнер, где выводятся комментарии
-    const commentsItems = commentsContainer.querySelectorAll('.slt-comment-item:not(.moderate)');
+    let commentsItems = null;
+    if (commentsContainer) {
+        commentsItems = commentsContainer.querySelectorAll('.slt-comment-item:not(.moderate)');
+    }
     addLikes(commentsItems,uid); // Добавляем лайки
     addAnswerComment(commentsItems,token,uid); // Подписка на событие клика по кнопке ответа
 
@@ -18,13 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             const formErrorElement = form.querySelector('.slt-comments-form-message');
-            //const canSubmit = await checkRateLimit();
-            // if (!canSubmit) {
-            //     formErrorElement.classList.remove('p-0');
-            //     formErrorElement.classList.add('alert-warning');
-            //     formErrorElement.innerHTML = 'Слишком частые попытки. Попробуйте позже. Вероятно, Вы уже отправили комментарий. Повторите попытку завтра.';
-            //     return;
-            // }
 
             const formData = new FormData(form);
             try {
@@ -38,8 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (result.data?.success) {
                         // Сохранить комментарий как "на модерации"
                         formData.set('idComment', result.data.idComment);
-                        //console.log(formData)
-                        //savePendingComment(formData);
 
                         form.reset();
                         formErrorElement.classList.remove('alert-danger', 'alert-warning', 'p-0');
@@ -73,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (btnsLike) {
                     btnsLike.forEach(btnLike => {
                         btnLike.addEventListener('click', (e) => {
-                            sendLike('slt_comments_likes',btnLike.dataset.id,btnLike.dataset.type,e.target,token);
+                            sendLike('slt_comments_likes',e.target.dataset.id,e.target.dataset.type,e.target,token);
                         });
                     });
                 }
@@ -104,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.set(token, '1');
                 formData.set('idComment', idComment);
                 formData.set('type', type);
+
                 try {
                     const response = await fetch('/index.php?option=com_ajax&plugin=SltCommentsLike&group=content&format=raw', {
                         method: 'POST',
@@ -168,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function addAnswerComment(commentsItems,token,uid) {
         if (!commentsItems) return;
+        const policyAgreementLabel = document.querySelector('.policyAgreementLabel') ? document.querySelector('.policyAgreementLabel').innerHTML : '';
             commentsItems.forEach(item => {
                 const btnAnswerComment = item.querySelector('.btn-comment__answer');
                 const AnswerCommentList = item.querySelector('.slt-comment__answers-list');
@@ -177,6 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         formData.set('content_item_id', e.target.dataset.articleid);
                         formData.set('parent_id', e.target.dataset.parentid);
                         formData.set('uid', uid);
+                        if (policyAgreementLabel) {
+                            formData.set('show_policy', policyAgreementLabel);
+                        }
                         const formAnswerCommentOuter = AnswerCommentList.querySelector('.slt-comment__answers-list-form');
                         formAnswerCommentOuter.innerHTML = getFormAddComment(formData,token,'Ответ на комментарий');
                         formAnswerCommentOuter.classList.add('mt-3');
@@ -190,9 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function makeFormAddComment(selector) {
         const formData = new FormData(selector.querySelector('form'));
-        selector.innerHTML = getFormAddComment(formData,token)
+        selector.innerHTML = getFormAddComment(formData,token);
     }
     function getFormAddComment(formData,token, title = 'Добавить комментарий', ) {
+        const showPolicy = formData.get('show_policy') !== '' ? formData.get('show_policy') : false;
+        const max = 1000;
+        const random = Math.floor(Math.random() * max) + 1;
         return `
             <form name="sltCommentForm" class="form-validate card text-bg-light mb-3 p-3">
                 <fieldset class="row m-0">
@@ -223,6 +226,21 @@ document.addEventListener('DOMContentLoaded', () => {
                             aria-required="true"
                             placeholder="Введите ваш комментарий..."></textarea>
                     </div>
+                    ${showPolicy ? `
+                    <div class="col-12 form-group mb-3">
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                name="policy_agreement"
+                                class="form-check-input required"
+                                id="policyAgreement-${random}"
+                                required
+                                aria-required="true"
+                                />
+                            <label class="form-check-label policyAgreementLabel" for="policyAgreement-${random}">${showPolicy}</label>
+                        </div>
+                    </div>
+                    ` : ''}
                     <div class="d-grid gap-2">
                         <input type="hidden" name="content_item_id" value="${formData.get('content_item_id')}" />
                         <input type="hidden" name="parent_id" value="${formData.get('parent_id')}" />
