@@ -62,11 +62,4 @@
     <layouts destination="components/slt_comments" folder="layouts">
         <folder>comments</folder>
     </layouts>
-    <config>
-        <fields name="params">
-            <fieldset name="component">
-                <field name="save_history" default="0" />
-            </fieldset>
-        </fields>
-    </config>
 </extension>
